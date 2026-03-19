@@ -63,7 +63,7 @@ Step 7: Stop the program.<br>
 :effect (haswater))) 
 ```
 ### Input 
-##Problem.PDDL
+## Problem.PDDL
 ```
 (define (problem pb1) 
 (:domain monkey) 
