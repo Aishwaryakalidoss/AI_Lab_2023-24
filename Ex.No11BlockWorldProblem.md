@@ -1,6 +1,6 @@
 # Ex.No: 11  Planning –  Block World Problem 
 ### DATE:                                                                            
-### REGISTER NUMBER : 
+### REGISTER NUMBER : 212222060008
 ### AIM: 
 To find the sequence of plan for Block word problem using PDDL  
 ###  Algorithm:
@@ -16,20 +16,59 @@ Step 9 : Define a problem for block world problem.<br>
 Step 10 : Obtain the plan for given problem.<br> 
      
 ### Program:
-
-
-
-
-
-
-
-
-
-### Input 
-
+```
+domain.pddl
+(define (domain blocksworld)
+(:requirements :strips :equality)
+(:predicates (clear ?x)
+(on-table ?x)
+(arm-empty)
+(holding ?x)
+(on ?x ?y))
+(:action pickup
+:parameters (?ob)
+:precondition (and (clear ?ob) (on-table ?ob) (arm-empty))
+:effect (and (holding ?ob) (not (clear ?ob)) (not (on-table ?ob))
+(not (arm-empty))))
+(:action putdown
+:parameters (?ob)
+:precondition (and (holding ?ob))
+:effect (and (clear ?ob) (arm-empty) (on-table ?ob)
+(not (holding ?ob))))
+(:action stack
+:parameters (?ob ?underob)
+:precondition (and (clear ?underob) (holding ?ob))
+:effect (and (arm-empty) (clear ?ob) (on ?ob ?underob)
+(not (clear ?underob)) (not (holding ?ob))))
+(:action unstack
+:parameters (?ob ?underob)
+:precondition (and (on ?ob ?underob) (clear ?ob) (arm-empty))
+:effect (and (holding ?ob) (clear ?underob)
+(not (on ?ob ?underob)) (not (clear ?ob)) (not (arm-empty)))))
+```
+### Input 1:
+```
+(define (problem pb1)
+(:domain blocksworld)
+(:objects a b)
+(:init (on-table a) (on-table b) (clear a) (clear b) (arm-empty))
+(:goal (and (on a b))))
+```
 ### Output/Plan:
 
+<img width="813" height="650" alt="image" src="https://github.com/user-attachments/assets/61595c8e-5c73-4b00-84c1-def2740a3937" />
 
+### Input 2:
+```
+(define(problem pb3)
+(:domain blocksworld)
+(:objects a b c)
+(:init (on-table a) (on-table b) (on-table c)
+(clear a) (clear b) (clear c) (arm-empty))
+(:goal (and (on a b) (on b c))))
+```
+### Output/Plan:
+<img width="822" height="637" alt="image" src="https://github.com/user-attachments/assets/1b6f0429-f565-41fb-b1ed-41c5670e92bf" />
 
 ### Result:
 Thus the plan was found for the initial and goal state of block world problem.
